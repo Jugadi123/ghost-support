@@ -1,0 +1,1 @@
+discord_bot_token = "MTM5NzczNzc0NTA5ODYwNDczNg.GjSA2V.rwdBm_wsic-1iguAXIKFUuKTcPMlLOaL2OgN0E"
