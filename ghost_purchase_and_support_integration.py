@@ -198,6 +198,12 @@ async def chat(ctx, *, message):
 
     response = await ghost_support_bot.get_latest_response(ctx.author.id)
 
+    placeholder = "@virex" # placeholder mention returned from GPT
+    mention = f"<@&{MONITOR_ROLE_ID}>"
+
+    if placeholder in response.lower():
+        response = response.replace(placeholder, mention)
+
     await thinking_msg.edit(content=response[:discord_word_limit])
 
 
