@@ -183,13 +183,14 @@ async def helpme(ctx):
 
 
 @bot.command()
-async def chat(ctx, *, message):
-    if not message.strip():
-        await ctx.reply("🛑 Please provide a message to send.")
-        return
+async def chat(ctx, *, message = ""):
 
     if not ctx.channel.name.startswith("inquiry-") or ctx.channel.category_id != ORDERS_CATEGORY_ID:
         await ctx.send("❌ This command can only be used inside your private Ghost inquiry channel.")
+        return
+
+    if message.strip() == "" or len(message.strip()) == 0:
+        await ctx.reply("🛑 Please provide a message to send.")
         return
 
     await ghost_support_bot.send_prompt(ctx.author.id, message)
@@ -198,7 +199,10 @@ async def chat(ctx, *, message):
 
     response = await ghost_support_bot.get_latest_response(ctx.author.id)
 
-    await thinking_msg.edit(content=response[:discord_word_limit])
+    if response.strip():
+        await thinking_msg.edit(content=response[:discord_word_limit])
+    else:
+        await thinking_msg.edit(content="[!] No response generated or failed to extract.")
 
 
 @bot.command()

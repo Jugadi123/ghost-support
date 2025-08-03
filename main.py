@@ -23,20 +23,6 @@ def check_dependencies():
         print("Installing with pip...")
         subprocess.check_call([sys.executable, "-m", "pip", "install", *missing])
 
-def check_microsoft_edge():
-    import os
-
-    if platform.system() == "Windows":
-        edge_paths = [
-            os.path.join(os.environ.get("ProgramFiles(x86)", ""), "Microsoft", "Edge", "Application", "msedge.exe"),
-            os.path.join(os.environ.get("ProgramFiles", ""), "Microsoft", "Edge", "Application", "msedge.exe")
-        ]
-        edge_exists = any(os.path.exists(path) for path in edge_paths)
-        if not edge_exists:
-            sys.exit("[X] Microsoft Edge is not installed or not in PATH.")
-    else:
-        print("[✓] Skipping Edge check (not Windows).")
-
 def run_bot():
     import ghost_purchase_and_support_integration
     ghost_purchase_and_support_integration.run()
@@ -45,5 +31,4 @@ if __name__ == "__main__":
     print("[✓] Booting Ghost Support Console...")
     check_python_version()
     check_dependencies()
-    check_microsoft_edge()
     run_bot()
